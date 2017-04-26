@@ -5,51 +5,39 @@ require('./index.css');
 
 class App extends React.Component {
   render() {
-    var words = ["hey", "ricky", "you", "so", "fine"];
     return (
-      <div>
-      <Romeo romeoText={words}/>
       <table>
-<tr><td/><td/><td/></tr>
-<tr><td/><C3 msg='boobs'/><td/></tr>
-<tr><C3 msg='tits' /><C3 msg='boobies'/><C3 msg='ass'/></tr>
-</table>
-      </div>
+        <tr>
+          <Bit/><Bit/>
+        </tr>
+        <tr>
+          <Bit/><Bit/>
+        </tr>
+      </table>
     )
   }
 }
 
+class Bit extends React.Component {
 
+  constructor() {
+    super();
+    this.state = {val: true}
+  }
 
-class C3 extends React.Component {
   render() {
-    if (this.props.msg === "boobs") {
-      console.log('found boobs!');
-      return <td style={{"backgroundColor": "#ff0000"}} />
-    } else {
-      return <td 
-        onClick={() => console.log(this.props.msg)}
-        style={{"backgroundColor": "#0000ff"}}
+    var colorTrue = "#ffffff";
+    var colorFalse = "#000000";
+
+    return (
+      <td 
+        style={{"backgroundColor": this.state.val ? colorTrue : colorFalse}}
+        onClick={(() => this.setState({val: !this.state.val})).bind(this)}
       />
-    }
-  }
-}
-
-function wordMap(words) {
-  return words.map(function(word) {
-    return (
-      <div> {word} </div>
-    )
-  })
-}
-
-class Romeo extends React.Component {
-  render() {
-    return (
-      wordMap(this.props.romeoText)
     )
   }
 }
+
 
 ReactDOM.render(
   <App />,
