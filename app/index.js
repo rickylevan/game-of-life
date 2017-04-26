@@ -3,16 +3,22 @@ var ReactDOM = require('react-dom');
 var PropTypes = require('prop-types');
 require('./index.css');
 
+var N = 5;
+var blank = new Array(N).fill(0);
+
 class App extends React.Component {
   render() {
     return (
       <table>
-        <tr>
-          <Bit/><Bit/>
-        </tr>
-        <tr>
-          <Bit/><Bit/>
-        </tr>
+        {blank.map(function(val) {
+          return (
+            <tr>
+              {blank.map(function(val) {
+                return <Bit/>
+              })}
+            </tr>
+          )
+        })}
       </table>
     )
   }
