@@ -1,3 +1,7 @@
 body {
   background: green;
 }
+
+table {border-spacing: 0px}
+
+td { width: 3em; height: 3em; line-height: 0; border-width:0}
