@@ -4,17 +4,29 @@ var PropTypes = require('prop-types');
 require('./index.css');
 
 var N = 5;
-var blank = new Array(N).fill(0);
-
 class App extends React.Component {
+  constructor() {
+    super();
+    this.state.vals = new Array(N).fill(new Array(N).fill(true));
+  }
+
+  toggle(idx, idy) {
+    var cpy = this.state.vals.slice();
+    cpy[idx][idy] = !cpy[idx][idy];
+    this.setState({vals: cpy});
+  }
+
   render() {
     return (
       <table>
-        {blank.map(function(val) {
+        {state.map(function(state, idx) {
           return (
             <tr>
-              {blank.map(function(val) {
-                return <Bit/>
+              {state.map(function(val, idy) {
+                return <Bit 
+                  val={this.state.vals[idx][idy]}
+                  f={this.toggle.bind(this).bind(null, idx, idy)}
+                />
               })}
             </tr>
           )
@@ -24,26 +36,17 @@ class App extends React.Component {
   }
 }
 
-class Bit extends React.Component {
+function Bit(props) {
+  var colorTrue = "#ffffff";
+  var colorFalse = "#000000";
 
-  constructor() {
-    super();
-    this.state = {val: true}
-  }
-
-  render() {
-    var colorTrue = "#ffffff";
-    var colorFalse = "#000000";
-
-    return (
-      <td 
-        style={{"backgroundColor": this.state.val ? colorTrue : colorFalse}}
-        onClick={(() => this.setState({val: !this.state.val})).bind(this)}
-      />
-    )
-  }
+  return (
+    <td 
+      style={{"backgroundColor": this.props.val ? colorTrue : colorFalse}}
+      onClick={props.f}
+    />
+  )
 }
-
 
 ReactDOM.render(
   <App />,
