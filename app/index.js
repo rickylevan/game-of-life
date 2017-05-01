@@ -18,20 +18,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <table>
-        {state.map(function(state, idx) {
-          return (
-            <tr>
-              {state.map(function(val, idy) {
-                return <Bit 
-                  val={this.state.vals[idx][idy]}
-                  f={this.toggle.bind(this).bind(null, idx, idy)}
-                />
-              })}
-            </tr>
-          )
-        })}
-      </table>
+      <h1> Hi! </h1>
     )
   }
 }
@@ -41,7 +28,7 @@ function Bit(props) {
   var colorFalse = "#000000";
 
   return (
-    <td 
+    <div 
       style={{"backgroundColor": this.props.val ? colorTrue : colorFalse}}
       onClick={props.f}
     />
