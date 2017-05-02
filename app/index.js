@@ -10,12 +10,24 @@ require('./index.css');
 
 
 
-var N = 5;
+var M = 5;
+var N = 4;
 class App extends React.Component {
   constructor() {
     super();
+
+    var arr  = [];
+    for (var i = 0; i < M; i++) {
+      var tmp = [];
+      for (var j = 0; j < N; j++) {
+        tmp.push(true);
+      }
+      arr.push(tmp);
+    }
+
+
     this.state = {
-      vals: new Array(N).fill(new Array(N).fill(true))
+      vals: arr
     }
 
     console.log(this.state.vals);
@@ -30,16 +42,19 @@ class App extends React.Component {
   render() {
     return (
       <table>
-        {this.state.vals.map((val, idx) => {
-            <tr>
-              {val.map((_, idy) => {
-                <Bit 
-                  val={this.state.vals[idx][idy]}
-                  f={this.toggle.bind(this).bind(null, idx, idy)}
-                />
-              })}
-            </tr>
-        })}
+        {this.state.vals.map((val, idx) => (
+          <tr key={idx}>
+            {val.map((item, idy) => (
+              <Bit 
+                val={item} 
+                f={this.toggle.bind(this)}
+                key={idy}
+                idx={idx}
+                idy={idy}
+              />
+            ))}
+          </tr>
+        ))}
       </table>
     )
   }
@@ -52,7 +67,7 @@ function Bit(props) {
   return (
     <td 
       style={{"backgroundColor": props.val ? colorTrue : colorFalse}}
-      onClick={props.f}
+      onClick={props.f.bind(null, props.idx, props.idy)}
     />
   )
 }
