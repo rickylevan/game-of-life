@@ -13,17 +13,18 @@ require('./index.css');
 
 
 
-var M = 3;
-var N = 3;
+var M = 61;
+var N = 61;
 var bConst = 1.9;
 
 
-var test = [[false, false, false], [false, true, true], [true, true, true]];
+//var test = [[false, false, false], [false, true, true], [true, true, true]];
 
 
 // [][]bool -> [][]float64
+// Use the cooperator and defector logic from CAAM 210 to assign
+// a score to each square. Intermediate step in state transition
 function score(init) {
-
     var i, j, k, l;
 
     // initialize numGrid
@@ -53,9 +54,45 @@ function score(init) {
         }
       }
     }
-
     return numGrid
 }
+
+// [][]bool, [][]float64 -> [][]bool
+function nextState(init, numGrid) {
+    var i, j, k, l;
+
+    // initialize out
+    var out = [];
+    for (i = 0; i < M; i++) {
+      var tmp = [];
+      for (j = 0; j < N; j++) {
+        tmp.push(false); // arbitrary, will be overwritten
+      }
+      out.push(tmp);
+    }
+
+
+    for (i = 0; i < M; i++) {
+      for (j = 0; j < N; j++) {
+        var argMax = {x: i, y: j};
+        for (k = 0; k < M; k++) {
+          for (l = 0; l < N; l++ ) {
+            var xdiff = Math.abs(i-k)
+            var ydiff = Math.abs(j-l)
+            if (xdiff <= 1 && ydiff <= 1) {
+              if (numGrid[k][l] > numGrid[argMax.x][argMax.y]) {
+                argMax = {x: k, y: l};
+              }
+            }
+          }
+        }
+          out[i][j] = init[argMax.x][argMax.y]
+      }
+    }
+
+    return out
+}
+
 
 
 
@@ -72,6 +109,9 @@ class App extends React.Component {
       arr.push(tmp);
     }
 
+    var p = Math.floor(N/2);
+    arr[p][p] = false;
+
 
     this.state = {
       vals: arr
@@ -80,8 +120,9 @@ class App extends React.Component {
     console.log(this.state.vals);
 
     console.log('TESTING');
-    console.log(test);
+    /*console.log(test);
     console.log(score(test));
+    console.log(nextState(test, score(test)));*/
   }
 
   toggle(idx, idy) {
@@ -100,8 +141,12 @@ class App extends React.Component {
 
   componentDidMount() {
     this.setInterval(
-      () => { this.toggleAll(); },
-      2000
+      /* () => { this.toggleAll(); }, */
+      () => {this.setState({vals: nextState(this.state.vals.slice(),
+                                            score(this.state.vals.slice())
+                                           
+              )});},
+      200
     )
   }
 
