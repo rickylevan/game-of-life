@@ -1,3 +1,6 @@
+import TimerMixin from 'react-timer-mixin';
+var reactMixin = require('react-mixin');
+
 var React = require('react');
 var ReactDOM = require('react-dom');
 var PropTypes = require('prop-types');
@@ -39,6 +42,21 @@ class App extends React.Component {
     this.setState({vals: cpy});
   }
 
+  toggleAll() {
+    for (var i = 0; i < M; i++) {
+      for (var j = 0; j < N; j++) {
+        this.toggle(i, j);
+      }
+    }
+  }
+
+  componentDidMount() {
+    this.setInterval(
+      () => { this.toggleAll(); },
+      2000
+    )
+  }
+
   render() {
     return (
       <table>
@@ -59,6 +77,8 @@ class App extends React.Component {
     )
   }
 }
+
+reactMixin(App.prototype, TimerMixin);
 
 function Bit(props) {
   var colorTrue = "#ffffff";
