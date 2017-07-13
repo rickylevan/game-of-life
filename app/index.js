@@ -6,12 +6,10 @@ var ReactDOM = require('react-dom');
 var PropTypes = require('prop-types');
 require('./index.css');
 
-                /*return <Bit 
-                  val={this.state.vals[idx][idy]}
-                  f={this.toggle.bind(this).bind(null, idx, idy)}
-                />*/
-
-
+/*return <Bit 
+  val={this.state.vals[idx][idy]}
+  f={this.toggle.bind(this).bind(null, idx, idy)}
+/>*/
 
 var M = 61;
 var N = 61;
@@ -117,12 +115,6 @@ class App extends React.Component {
       vals: arr
     }
 
-    console.log(this.state.vals);
-
-    console.log('TESTING');
-    /*console.log(test);
-    console.log(score(test));
-    console.log(nextState(test, score(test)));*/
   }
 
   toggle(idx, idy) {
@@ -131,17 +123,9 @@ class App extends React.Component {
     this.setState({vals: cpy});
   }
 
-  toggleAll() {
-    for (var i = 0; i < M; i++) {
-      for (var j = 0; j < N; j++) {
-        this.toggle(i, j);
-      }
-    }
-  }
 
   componentDidMount() {
     this.setInterval(
-      /* () => { this.toggleAll(); }, */
       () => {this.setState({vals: nextState(this.state.vals.slice(),
                                             score(this.state.vals.slice())
                                            
