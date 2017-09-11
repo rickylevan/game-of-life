@@ -1,0 +1,7 @@
+body {
+  background: green;
+}
+
+table {border-spacing: 5px}
+
+td { width: 0.5em; height: 0.5em; line-height: 0; border-width:0}
